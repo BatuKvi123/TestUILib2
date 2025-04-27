@@ -1,0 +1,571 @@
+-- max desc limit: 60
+-- desc limit reduced: 57
+
+-- // Variables
+local lib = {}
+local TweenService = game:GetService("TweenService")
+local Mouse = game.Players.LocalPlayer:GetMouse()
+local Dropdown_CLOSED = UDim2.new(0, 353,0, -4)
+local Dropdown_OPENED = UDim2.new(0, 353,0, 119)
+local ddToggle = false
+local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out, 0, false, 0)
+
+-- // Notification
+local function SendNotification(Title, Text)
+	game.StarterGui:SetCore("SendNotification", {
+		Title = Title,
+		Text = Text,
+	})
+end
+
+-- // Tween
+function Tween(object, goal, callback)
+	local tween = TweenService:Create(object, tweenInfo, goal)
+	tween.Completed:Connect(callback or function() end)
+	tween:Play()
+end
+
+-- // Lib Creating
+function lib:new(uiname, keybind, draggable)
+	-- // Variables
+	uiname = uiname or "UI Library"
+	keybind = keybind or "E"
+	draggable = draggable or true
+	
+	-- // Main Code
+	
+	local ui_libtake2 = Instance.new("ScreenGui")
+	local Main = Instance.new("Frame")
+	local UICorner = Instance.new("UICorner")
+	local Topbar = Instance.new("Frame")
+	local UICorner_2 = Instance.new("UICorner")
+	local libname = Instance.new("TextLabel")
+	local close = Instance.new("TextButton")
+	local UICorner_3 = Instance.new("UICorner")
+	local TabButtons = Instance.new("Frame")
+	local UICorner_4 = Instance.new("UICorner")
+	local tabbtnsscroll = Instance.new("ScrollingFrame")
+	local UIListLayout = Instance.new("UIListLayout")
+	local Containers = Instance.new("Folder")
+	local TabsHolder = Instance.new("Frame")
+	
+	ui_libtake2.Name = uiname
+	ui_libtake2.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+	ui_libtake2.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+	Main.Name = "Main"
+	Main.Parent = ui_libtake2
+	Main.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+	Main.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Main.BorderSizePixel = 0
+	Main.Position = UDim2.new(0.275856376, 0, 0.212100133, 0)
+	Main.Size = UDim2.new(0, 544, 0, 330)
+	
+	-- // Draggable
+	if draggable then
+		Main.Active = true
+		Main.Selectable = true
+		Main.Draggable = true
+	else
+		return false
+	end
+	
+	-- // Keybind
+	Mouse.KeyDown:Connect(function(k)
+		if k == keybind then
+			Main.Visible = not Main.Visible
+			
+			-- // Dont send notification is the Main frame is already closed
+			if Main.Visible == false then
+				SendNotification(uiname, "Press '"..keybind.."' key to open back.")
+				end
+		end
+	end)
+
+	UICorner.Parent = Main
+
+	Topbar.Name = "Topbar"
+	Topbar.Parent = Main
+	Topbar.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+	Topbar.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	Topbar.BorderSizePixel = 0
+	Topbar.Position = UDim2.new(0.0220588241, 0, 0.0424242429, 0)
+	Topbar.Size = UDim2.new(0, 519, 0, 22)
+
+	UICorner_2.Parent = Topbar
+
+	libname.Name = "libname"
+	libname.Parent = Topbar
+	libname.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	libname.BackgroundTransparency = 1.000
+	libname.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	libname.BorderSizePixel = 0
+	libname.Position = UDim2.new(0.0154142585, 0, 0, 0)
+	libname.Size = UDim2.new(0, 480, 0, 22)
+	libname.Font = Enum.Font.SourceSansBold
+	libname.Text = uiname
+	libname.TextColor3 = Color3.fromRGB(255, 255, 255)
+	libname.TextSize = 14.000
+	libname.TextXAlignment = Enum.TextXAlignment.Left
+
+	close.Name = "close"
+	close.Parent = Topbar
+	close.BackgroundColor3 = Color3.fromRGB(158, 0, 0)
+	close.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	close.BorderSizePixel = 0
+	close.Position = UDim2.new(0.946050107, 0, 0, 0)
+	close.Size = UDim2.new(0, 28, 0, 22)
+	close.Font = Enum.Font.SourceSansBold
+	close.Text = "X"
+	close.TextColor3 = Color3.fromRGB(255, 255, 255)
+	close.TextScaled = true
+	close.TextSize = 14.000
+	close.TextWrapped = true
+
+	UICorner_3.Parent = close
+
+	TabButtons.Name = "TabButtons"
+	TabButtons.Parent = Main
+	TabButtons.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+	TabButtons.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	TabButtons.BorderSizePixel = 0
+	TabButtons.Position = UDim2.new(0.0220588241, 0, 0.13636364, 0)
+	TabButtons.Size = UDim2.new(0, 135, 0, 275)
+
+	UICorner_4.Parent = TabButtons
+
+	tabbtnsscroll.Name = "tabbtnsscroll"
+	tabbtnsscroll.Parent = TabButtons
+	tabbtnsscroll.Active = true
+	tabbtnsscroll.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	tabbtnsscroll.BackgroundTransparency = 1.000
+	tabbtnsscroll.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	tabbtnsscroll.BorderSizePixel = 0
+	tabbtnsscroll.Size = UDim2.new(0, 135, 0, 275)
+	tabbtnsscroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+	tabbtnsscroll.ScrollBarThickness = 0
+
+	UIListLayout.Parent = tabbtnsscroll
+	UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	UIListLayout.Padding = UDim.new(0, 10)
+	
+	Containers.Name = "Containers"
+	Containers.Parent = TabsHolder
+	
+	TabsHolder.Name = "TabsHolder"
+	TabsHolder.Parent = Main
+	TabsHolder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TabsHolder.BackgroundTransparency = 1.000
+	TabsHolder.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	TabsHolder.BorderSizePixel = 0
+	TabsHolder.Position = UDim2.new(0.286764711, 0, 0.13636364, 0)
+	TabsHolder.Size = UDim2.new(0, 375, 0, 275)
+	
+	-- // Tab
+	local tab = {}
+	
+	-- // Tab
+	function tab:NewTab(tabname)
+		
+		local TabBTN = Instance.new("TextButton")
+		local UICorner_5 = Instance.new("UICorner")
+		local UIPadding = Instance.new("UIPadding")
+		local Container2 = Instance.new("Frame")
+		local scroll = Instance.new("ScrollingFrame")
+		local UIListLayout_2 = Instance.new("UIListLayout")
+		local UIPadding_2 = Instance.new("UIPadding")
+		
+		TabBTN.Name = tabname .."_tab"
+		TabBTN.Parent = tabbtnsscroll
+		TabBTN.BackgroundColor3 = Color3.fromRGB(7, 7, 7)
+		TabBTN.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		TabBTN.BorderSizePixel = 0
+		TabBTN.Size = UDim2.new(0, 123, 0, 45)
+		TabBTN.Font = Enum.Font.SourceSansBold
+		TabBTN.Text = tabname
+		TabBTN.TextColor3 = Color3.fromRGB(255, 255, 255)
+		TabBTN.TextScaled = true
+		TabBTN.TextSize = 14.000
+		TabBTN.TextWrapped = true
+
+		UICorner_5.Parent = TabBTN
+
+		UIPadding.Parent = tabbtnsscroll
+		UIPadding.PaddingLeft = UDim.new(0, 6)
+		UIPadding.PaddingTop = UDim.new(0, 5)
+
+		Container2.Name = tabname.."_Container"
+		Container2.Parent = Containers
+		Container2.Visible = false
+		Container2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		Container2.BackgroundTransparency = 1.000
+		Container2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		Container2.BorderSizePixel = 0
+		Container2.Size = UDim2.new(0, 375, 0, 275)
+
+		scroll.Name = "scroll"
+		scroll.Parent = Container2
+		scroll.Active = true
+		scroll.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		scroll.BackgroundTransparency = 1.000
+		scroll.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		scroll.BorderSizePixel = 0
+		scroll.Size = UDim2.new(0, 375, 0, 275)
+		scroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+		scroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+
+		UIListLayout_2.Parent = scroll
+		UIListLayout_2.SortOrder = Enum.SortOrder.LayoutOrder
+		UIListLayout_2.Padding = UDim.new(0, 10)
+
+		UIPadding_2.Parent = scroll
+		UIPadding_2.PaddingLeft = UDim.new(0, 10)
+		UIPadding_2.PaddingTop = UDim.new(0, 5)
+		
+		TabBTN.MouseButton1Click:Connect(function()
+			for i,v in next, Containers:GetChildren() do
+				v.Visible = false
+			end
+			Container2.Visible = true
+		end)
+		
+		-- // Elements
+		local elements = {}
+		
+		
+		-- // Button
+		function elements:NewButton(btnname, btndescrip, callback)
+			
+			
+			local Button = Instance.new("Frame")
+			local UICorner = Instance.new("UICorner")
+			local btntext = Instance.new("TextLabel")
+			local btndesc = Instance.new("TextLabel")
+			local mouseicon = Instance.new("ImageLabel")
+			local clickbtn = Instance.new("TextButton")
+			
+			Button.Name = "Button"
+			Button.Parent = scroll
+			Button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+			Button.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Button.BorderSizePixel = 0
+			Button.Size = UDim2.new(0, 353, 0, 37)
+
+			UICorner.Parent = Button
+
+			btntext.Name = "btntext"
+			btntext.Parent = Button
+			btntext.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			btntext.BackgroundTransparency = 1.000
+			btntext.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			btntext.BorderSizePixel = 0
+			btntext.Position = UDim2.new(0.0169998463, 0, 0, 3)
+			btntext.Size = UDim2.new(0, 293, 0, 16)
+			btntext.Font = Enum.Font.SourceSansBold
+			btntext.Text = btnname
+			btntext.TextColor3 = Color3.fromRGB(255, 255, 255)
+			btntext.TextSize = 14.000
+			btntext.TextXAlignment = Enum.TextXAlignment.Left
+
+			btndesc.Name = "btndesc"
+			btndesc.Parent = Button
+			btndesc.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			btndesc.BackgroundTransparency = 1.000
+			btndesc.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			btndesc.BorderSizePixel = 0
+			btndesc.Position = UDim2.new(0.0169970803, 0, 0.378378391, 5)
+			btndesc.Size = UDim2.new(0, 293, 0, 16)
+			btndesc.Font = Enum.Font.SourceSansBold
+			btndesc.Text = btndescrip
+			btndesc.TextColor3 = Color3.fromRGB(255, 255, 255)
+			btndesc.TextSize = 11.000
+			btndesc.TextTransparency = 0.500
+			btndesc.TextXAlignment = Enum.TextXAlignment.Left
+			btndesc.TextWrapped = true
+			
+			if string.len(btndesc.Text) >= 60 then
+				local newStr = string.sub(btndesc.Text, 1, 57)
+				btndesc.Text = newStr.."..."
+			end
+
+
+			mouseicon.Name = "mouseicon"
+			mouseicon.Parent = Button
+			mouseicon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			mouseicon.BackgroundTransparency = 1.000
+			mouseicon.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			mouseicon.BorderSizePixel = 0
+			mouseicon.Position = UDim2.new(0.872524023, 0, 0.0540540554, 0)
+			mouseicon.Size = UDim2.new(0, 35, 0, 32)
+			mouseicon.Image = "rbxassetid://16081386298"
+
+			clickbtn.Name = "clickbtn"
+			clickbtn.Parent = Button
+			clickbtn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			clickbtn.BackgroundTransparency = 1.000
+			clickbtn.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			clickbtn.BorderSizePixel = 0
+			clickbtn.Size = UDim2.new(0, 353, 0, 35)
+			clickbtn.Font = Enum.Font.SourceSans
+			clickbtn.Text = ""
+			clickbtn.TextColor3 = Color3.fromRGB(0, 0, 0)
+			clickbtn.TextSize = 14.000
+			
+			clickbtn.MouseButton1Click:Connect(function()
+				callback()
+				
+				Tween(mouseicon, {ImageColor3 = Color3.fromRGB(0, 203, 17)})
+				wait(0.3)
+				Tween(mouseicon, {ImageColor3 = Color3.fromRGB(255, 255, 255)})
+			end)
+		end
+		
+		
+		-- // Toggle
+		function elements:NewToggle(togtext, togdesc, callback)
+			local toggle = false
+			
+			
+			local Toggle = Instance.new("Frame")
+			local UICorner = Instance.new("UICorner")
+			local toggletext = Instance.new("TextLabel")
+			local toggledesc = Instance.new("TextLabel")
+			local ToggleBG = Instance.new("Frame")
+			local UICorner_2 = Instance.new("UICorner")
+			local togglestatus = Instance.new("Frame")
+			local UICorner_3 = Instance.new("UICorner")
+			local toggleclickbtn = Instance.new("TextButton")
+			
+			Toggle.Name = "Toggle"
+			Toggle.Parent = scroll
+			Toggle.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+			Toggle.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Toggle.BorderSizePixel = 0
+			Toggle.Size = UDim2.new(0, 353, 0, 37)
+
+			UICorner.Parent = Toggle
+
+			toggletext.Name = "toggletext"
+			toggletext.Parent = Toggle
+			toggletext.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			toggletext.BackgroundTransparency = 1.000
+			toggletext.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			toggletext.BorderSizePixel = 0
+			toggletext.Position = UDim2.new(0.0169999339, 0, 0, 3)
+			toggletext.Size = UDim2.new(0, 292, 0, 16)
+			toggletext.Font = Enum.Font.SourceSansBold
+			toggletext.Text = "Toggle Text"
+			toggletext.TextColor3 = Color3.fromRGB(255, 255, 255)
+			toggletext.TextSize = 14.000
+			toggletext.TextXAlignment = Enum.TextXAlignment.Left
+
+			toggledesc.Name = "toggledesc"
+			toggledesc.Parent = Toggle
+			toggledesc.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			toggledesc.BackgroundTransparency = 1.000
+			toggledesc.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			toggledesc.BorderSizePixel = 0
+			toggledesc.Position = UDim2.new(0.0169970803, 0, 0.378378391, 5)
+			toggledesc.Size = UDim2.new(0, 293, 0, 16)
+			toggledesc.Font = Enum.Font.SourceSansBold
+			toggledesc.Text = "Toggle Desc"
+			toggledesc.TextColor3 = Color3.fromRGB(255, 255, 255)
+			toggledesc.TextSize = 11.000
+			toggledesc.TextTransparency = 0.500
+			toggledesc.TextXAlignment = Enum.TextXAlignment.Left
+
+			ToggleBG.Name = "ToggleBG"
+			ToggleBG.Parent = Toggle
+			ToggleBG.BackgroundColor3 = Color3.fromRGB(13, 13, 13)
+			ToggleBG.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			ToggleBG.BorderSizePixel = 0
+			ToggleBG.Position = UDim2.new(0.870167136, 0, 0.0810270533, 0)
+			ToggleBG.Size = UDim2.new(0, 35, 0, 32)
+
+			UICorner_2.Parent = ToggleBG
+
+			togglestatus.Name = "togglestatus"
+			togglestatus.Parent = ToggleBG
+			togglestatus.BackgroundColor3 = Color3.fromRGB(103, 0, 0)
+			togglestatus.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			togglestatus.BorderSizePixel = 0
+			togglestatus.Position = UDim2.new(0.127310619, 0, 0.112277031, 0)
+			togglestatus.Size = UDim2.new(0, 26, 0, 24)
+
+			UICorner_3.Parent = togglestatus
+
+			toggleclickbtn.Name = "toggleclickbtn"
+			toggleclickbtn.Parent = togglestatus
+			toggleclickbtn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			toggleclickbtn.BackgroundTransparency = 1.000
+			toggleclickbtn.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			toggleclickbtn.BorderSizePixel = 0
+			toggleclickbtn.Position = UDim2.new(-0.0769230798, 0, -0.0833339691, 0)
+			toggleclickbtn.Size = UDim2.new(0, 30, 0, 28)
+			toggleclickbtn.Font = Enum.Font.SourceSans
+			toggleclickbtn.Text = " "
+			toggleclickbtn.TextColor3 = Color3.fromRGB(0, 0, 0)
+			toggleclickbtn.TextSize = 14.000
+			
+			toggleclickbtn.MouseButton1Click:Connect(function()
+				toggle = not toggle
+				callback(toggle)
+				
+				if toggle then
+					Tween(togglestatus, {BackgroundColor3 = Color3.fromRGB(0, 167, 14)})
+				else
+					Tween(togglestatus, {BackgroundColor3 = Color3.fromRGB(103, 0, 0)})
+				end
+			end)
+		end
+		
+		function elements:NewDropdown(ddTEXT, ddDESC, btns, callback)
+			local Dropdown = Instance.new("Frame")
+			local UICorner = Instance.new("UICorner")
+			local ddtext = Instance.new("TextLabel")
+			local dddesc = Instance.new("TextLabel")
+			local clickbtn = Instance.new("TextButton")
+			local DropdownList = Instance.new("ScrollingFrame")
+			local UIListLayout = Instance.new("UIListLayout")
+			local UIPadding_2 = Instance.new("UIPadding")
+			
+			Dropdown.Name = "Dropdown"
+			Dropdown.Parent = scroll
+			Dropdown.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+			Dropdown.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Dropdown.BorderSizePixel = 0
+			Dropdown.Size = UDim2.new(0, 353, 0, 37)
+
+			UICorner.Parent = Dropdown
+
+			ddtext.Name = "ddtext"
+			ddtext.Parent = Dropdown
+			ddtext.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			ddtext.BackgroundTransparency = 1.000
+			ddtext.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			ddtext.BorderSizePixel = 0
+			ddtext.Position = UDim2.new(0.0169998463, 0, 0, 3)
+			ddtext.Size = UDim2.new(0, 293, 0, 16)
+			ddtext.Font = Enum.Font.SourceSansBold
+			ddtext.Text = ddTEXT
+			ddtext.TextColor3 = Color3.fromRGB(255, 255, 255)
+			ddtext.TextSize = 14.000
+			ddtext.TextXAlignment = Enum.TextXAlignment.Left
+
+			dddesc.Name = "dddesc"
+			dddesc.Parent = Dropdown
+			dddesc.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			dddesc.BackgroundTransparency = 1.000
+			dddesc.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			dddesc.BorderSizePixel = 0
+			dddesc.Position = UDim2.new(0.0169970803, 0, 0.378378391, 5)
+			dddesc.Size = UDim2.new(0, 293, 0, 16)
+			dddesc.Font = Enum.Font.SourceSansBold
+			dddesc.Text = ddDESC
+			dddesc.TextColor3 = Color3.fromRGB(255, 255, 255)
+			dddesc.TextSize = 11.000
+			dddesc.TextTransparency = 0.500
+			dddesc.TextXAlignment = Enum.TextXAlignment.Left
+
+			clickbtn.Name = "clickbtn"
+			clickbtn.Parent = Dropdown
+			clickbtn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			clickbtn.BackgroundTransparency = 1
+			clickbtn.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			clickbtn.BorderSizePixel = 0
+			clickbtn.Position = UDim2.new(0.873000026, 0, 0.0540000014, 0)
+			clickbtn.Rotation = -90.000
+			clickbtn.Size = UDim2.new(0, 35, 0, 32)
+			clickbtn.Font = Enum.Font.SourceSansBold
+			clickbtn.Text = "<"
+			clickbtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+			clickbtn.TextScaled = true
+			clickbtn.TextSize = 14.000
+			clickbtn.TextWrapped = true
+
+			DropdownList.Name = "DropdownList"
+			DropdownList.Parent = scroll
+			DropdownList.Active = true
+			DropdownList.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+			DropdownList.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			DropdownList.BorderSizePixel = 0
+			DropdownList.Position = UDim2.new(0, 0, 0.891891897, 0)
+			DropdownList.Size = Dropdown_CLOSED				--UDim2.new(0, 353, 0, 119)
+			DropdownList.CanvasSize = UDim2.new(0, 0, 0, 0)
+			DropdownList.AutomaticCanvasSize = Enum.AutomaticSize.Y
+			DropdownList.Visible = false
+
+			UIListLayout.Parent = DropdownList
+			UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+			UIListLayout.Padding = UDim.new(0, 10)
+
+			
+
+			UIPadding_2.Parent = DropdownList
+			UIPadding_2.PaddingLeft = UDim.new(0, 8)
+			UIPadding_2.PaddingTop = UDim.new(0, 5)
+			
+			local function updBTNS()
+				for i,v in pairs(DropdownList:GetChildren()) do
+					if v:IsA("TextButton") then
+						v:Destroy()
+					end
+				end
+				
+				wait(0.0000000000000001)
+				
+				for _, optionUPD in ipairs(btns) do
+					
+					local DropdownBTN = Instance.new("TextButton")
+					local UIPadding = Instance.new("UIPadding")
+					
+					DropdownBTN.Name = "DropdownBTN"
+					DropdownBTN.Parent = DropdownList
+					DropdownBTN.BackgroundColor3 = Color3.fromRGB(77, 77, 77)
+					DropdownBTN.BorderColor3 = Color3.fromRGB(0, 0, 0)
+					DropdownBTN.BorderSizePixel = 0
+					DropdownBTN.Size = UDim2.new(0, 337, 0, 30)
+					DropdownBTN.Font = Enum.Font.SourceSansBold
+					DropdownBTN.TextColor3 = Color3.fromRGB(255, 255, 255)
+					DropdownBTN.TextSize = 14.000
+					DropdownBTN.TextXAlignment = Enum.TextXAlignment.Left
+					DropdownBTN.Text = optionUPD
+
+					UIPadding.Parent = DropdownBTN
+					UIPadding.PaddingLeft = UDim.new(0, 5)
+					
+					DropdownBTN.MouseButton1Click:Connect(function()
+						callback(optionUPD)
+					end)
+				end
+			end
+			
+			clickbtn.MouseButton1Click:Connect(function()
+				print("clicked clickbtn")
+				
+				
+				ddToggle = not ddToggle
+
+				if ddToggle then
+					DropdownList.Visible = true
+					updBTNS()
+					Tween(clickbtn, {Rotation = 90})
+					Tween(DropdownList, {Size = Dropdown_OPENED})
+				else
+					Tween(clickbtn, {Rotation = -90})
+					Tween(DropdownList, {Size = Dropdown_CLOSED})
+					task.wait(.3)
+					DropdownList.Visible = false
+				end
+			end)
+			
+		end
+		
+		return elements
+	end
+	
+	
+	return tab
+	
+end
+return lib

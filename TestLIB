@@ -538,7 +538,9 @@ local Dropdown = Instance.new("Frame")
 						callback(optionUPD)
 for i,v in pairs(DropdownList:GetChildren()) do
 if v:IsA("TextButton") then
-v.Text:gsub(" %(Selected%)", "")
+if string.find(v.Text, "(Selected)") then
+v.Text:gsub("(Selected)", "")
+end
 end
 end
 DropdownBTN.Text = optionUPD .. " (Selected)"

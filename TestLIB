@@ -7,7 +7,6 @@ local TweenService = game:GetService("TweenService")
 local Mouse = game.Players.LocalPlayer:GetMouse()
 local Dropdown_CLOSED = UDim2.new(0, 353,0, -4)
 local Dropdown_OPENED = UDim2.new(0, 353,0, 119)
-local ddToggle = false
 local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out, 0, false, 0)
 
 -- // Notification
@@ -420,7 +419,8 @@ function lib:new(uiname, keybind, draggable)
 		end
 		
 		function elements:NewDropdown(ddTEXT, ddDESC, btns, callback)
-			local Dropdown = Instance.new("Frame")
+			local ddToggle = false
+local Dropdown = Instance.new("Frame")
 			local UICorner = Instance.new("UICorner")
 			local ddtext = Instance.new("TextLabel")
 			local dddesc = Instance.new("TextLabel")
@@ -547,7 +547,6 @@ end)
 			end
 			
 			clickbtn.MouseButton1Click:Connect(function()
-				print("clicked clickbtn")
 				
 				
 				ddToggle = not ddToggle

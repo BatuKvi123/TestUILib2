@@ -535,18 +535,13 @@ local Dropdown = Instance.new("Frame")
 					UIPadding.PaddingLeft = UDim.new(0, 5)
 					
 					DropdownBTN.MouseButton1Click:Connect(function()
-	callback(optionUPD)
-	ddtext.Text = optionUPD .. " (Selected)"
-	ddToggle = false
-	Tween(clickbtn, {Rotation = -90})
-	Tween(DropdownList, {Size = Dropdown_CLOSED})
-	task.wait(.3)
-	DropdownList.Visible = false
-end)
+						callback(optionUPD)
+					end)
 				end
 			end
 			
 			clickbtn.MouseButton1Click:Connect(function()
+	
 				
 				
 				ddToggle = not ddToggle

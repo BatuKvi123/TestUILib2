@@ -7,7 +7,7 @@ local TweenService = game:GetService("TweenService")
 local Mouse = game.Players.LocalPlayer:GetMouse()
 local Dropdown_CLOSED = UDim2.new(0, 353,0, -4)
 local Dropdown_OPENED = UDim2.new(0, 353,0, 119)
-
+local ddToggle = false
 local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Sine, Enum.EasingDirection.Out, 0, false, 0)
 
 -- // Notification
@@ -420,8 +420,7 @@ function lib:new(uiname, keybind, draggable)
 		end
 		
 		function elements:NewDropdown(ddTEXT, ddDESC, btns, callback)
-		local ddToggle = false
-local Dropdown = Instance.new("Frame")
+			local Dropdown = Instance.new("Frame")
 			local UICorner = Instance.new("UICorner")
 			local ddtext = Instance.new("TextLabel")
 			local dddesc = Instance.new("TextLabel")
@@ -514,36 +513,41 @@ local Dropdown = Instance.new("Frame")
 				end
 				
 				wait(0.0000000000000001)
+				
 				for _, optionUPD in ipairs(btns) do
-    local currentOption = optionUPD -- create a local copy
+					
+					local DropdownBTN = Instance.new("TextButton")
+					local UIPadding = Instance.new("UIPadding")
+					
+					DropdownBTN.Name = "DropdownBTN"
+					DropdownBTN.Parent = DropdownList
+					DropdownBTN.BackgroundColor3 = Color3.fromRGB(77, 77, 77)
+					DropdownBTN.BorderColor3 = Color3.fromRGB(0, 0, 0)
+					DropdownBTN.BorderSizePixel = 0
+					DropdownBTN.Size = UDim2.new(0, 337, 0, 30)
+					DropdownBTN.Font = Enum.Font.SourceSansBold
+					DropdownBTN.TextColor3 = Color3.fromRGB(255, 255, 255)
+					DropdownBTN.TextSize = 14.000
+					DropdownBTN.TextXAlignment = Enum.TextXAlignment.Left
+					DropdownBTN.Text = optionUPD
 
-    local DropdownBTN = Instance.new("TextButton")
-    local UIPadding = Instance.new("UIPadding")
-     
-    DropdownBTN.Name = ddTEXT
-    DropdownBTN.Parent = DropdownList
-    DropdownBTN.BackgroundColor3 = Color3.fromRGB(77, 77, 77)
-    DropdownBTN.BorderColor3 = Color3.fromRGB(0, 0, 0)
-    DropdownBTN.BorderSizePixel = 0
-    DropdownBTN.Size = UDim2.new(0, 337, 0, 30)
-    DropdownBTN.Font = Enum.Font.SourceSansBold
-    DropdownBTN.TextColor3 = Color3.fromRGB(255, 255, 255)
-    DropdownBTN.TextSize = 14.000
-    DropdownBTN.TextXAlignment = Enum.TextXAlignment.Left
-    DropdownBTN.Text = currentOption
-
-    UIPadding.Parent = DropdownBTN
-    UIPadding.PaddingLeft = UDim.new(0, 5)
-     
-    DropdownBTN.MouseButton1Click:Connect(function()
-        callback(currentOption)
-        DropdownList[ddTEXT].Text = currentOption .. " (Selected)"
-    end)
-end
-
+					UIPadding.Parent = DropdownBTN
+					UIPadding.PaddingLeft = UDim.new(0, 5)
+					
+					DropdownBTN.MouseButton1Click:Connect(function()
+	callback(optionUPD)
+	ddtext.Text = optionUPD .. " (Selected)"
+	ddToggle = false
+	Tween(clickbtn, {Rotation = -90})
+	Tween(DropdownList, {Size = Dropdown_CLOSED})
+	task.wait(.3)
+	DropdownList.Visible = false
+end)
+				end
 			end
 			
 			clickbtn.MouseButton1Click:Connect(function()
+				print("clicked clickbtn")
 				
 				
 				ddToggle = not ddToggle

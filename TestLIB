@@ -514,32 +514,33 @@ local Dropdown = Instance.new("Frame")
 				end
 				
 				wait(0.0000000000000001)
-				
 				for _, optionUPD in ipairs(btns) do
-					
-					local DropdownBTN = Instance.new("TextButton")
-					local UIPadding = Instance.new("UIPadding")
-					
-					DropdownBTN.Name = ddTEXT
-					DropdownBTN.Parent = DropdownList
-					DropdownBTN.BackgroundColor3 = Color3.fromRGB(77, 77, 77)
-					DropdownBTN.BorderColor3 = Color3.fromRGB(0, 0, 0)
-					DropdownBTN.BorderSizePixel = 0
-					DropdownBTN.Size = UDim2.new(0, 337, 0, 30)
-					DropdownBTN.Font = Enum.Font.SourceSansBold
-					DropdownBTN.TextColor3 = Color3.fromRGB(255, 255, 255)
-					DropdownBTN.TextSize = 14.000
-					DropdownBTN.TextXAlignment = Enum.TextXAlignment.Left
-					DropdownBTN.Text = optionUPD
+    local currentOption = optionUPD -- create a local copy
 
-					UIPadding.Parent = DropdownBTN
-					UIPadding.PaddingLeft = UDim.new(0, 5)
-					
-					DropdownBTN.MouseButton1Click:Connect(function()
-						callback(optionUPD)
-DropdownList[ddTEXT].Text = optionUPD .. " (Selected)"
-					end)
-				end
+    local DropdownBTN = Instance.new("TextButton")
+    local UIPadding = Instance.new("UIPadding")
+     
+    DropdownBTN.Name = ddTEXT
+    DropdownBTN.Parent = DropdownList
+    DropdownBTN.BackgroundColor3 = Color3.fromRGB(77, 77, 77)
+    DropdownBTN.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    DropdownBTN.BorderSizePixel = 0
+    DropdownBTN.Size = UDim2.new(0, 337, 0, 30)
+    DropdownBTN.Font = Enum.Font.SourceSansBold
+    DropdownBTN.TextColor3 = Color3.fromRGB(255, 255, 255)
+    DropdownBTN.TextSize = 14.000
+    DropdownBTN.TextXAlignment = Enum.TextXAlignment.Left
+    DropdownBTN.Text = currentOption
+
+    UIPadding.Parent = DropdownBTN
+    UIPadding.PaddingLeft = UDim.new(0, 5)
+     
+    DropdownBTN.MouseButton1Click:Connect(function()
+        callback(currentOption)
+        DropdownList[ddTEXT].Text = currentOption .. " (Selected)"
+    end)
+end
+
 			end
 			
 			clickbtn.MouseButton1Click:Connect(function()

@@ -537,7 +537,7 @@ local Dropdown = Instance.new("Frame")
 					
 					DropdownBTN.MouseButton1Click:Connect(function()
 						callback(optionUPD)
-DropdownList[optionUPD].Text = optionUPD .. " (Selected)"
+DropdownList[ddTEXT].Text = optionUPD .. " (Selected)"
 					end)
 				end
 			end
